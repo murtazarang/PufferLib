@@ -12,7 +12,6 @@ from pettingzoo.utils.env import ParallelEnv
 
 import pufferlib
 import pufferlib.emulation
-import pufferlib.utils
 
 
 HIGH = 100
@@ -318,7 +317,7 @@ class GymnasiumTestEnv(gym.Env):
 
     def reset(self, seed=None):
         self.tick = 0
-        self.rng = pufferlib.utils.RandomState(seed)
+        self.rng = np.random.RandomState(seed)
 
         ob = _sample_space('agent_1', self.tick, self.observation_space)
         return ob, {}

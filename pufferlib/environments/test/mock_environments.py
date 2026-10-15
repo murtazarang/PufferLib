@@ -11,16 +11,14 @@ from pettingzoo.utils.env import ParallelEnv
 
 import pufferlib
 import pufferlib.emulation
-import pufferlib.utils
 
 
 HIGH = 100
 LOW = 0
 
-def make_performance_env(delay=0, bandwidth=1):
+def make_performance_env(delay=0, bandwidth=1, buf=None, seed=0):
     return pufferlib.emulation.PettingZooPufferEnv(
-        env_creator=PerformanceEnv,
-        env_args=[delay, bandwidth],
+        env=PerformanceEnv(delay, bandwidth), buf=buf, seed=seed,
     )
 
 class PerformanceEnv:
@@ -58,6 +56,10 @@ class PerformanceEnv:
 
     def action_space(self, agent):
         return Discrete(2)
+
+    def close(self):
+        """Close the allocation-free performance fixture."""
+        pass
     
 
 ### Other Mock environments and utilities
@@ -99,7 +101,7 @@ class GymnasiumTestEnv(gym.Env):
 
     def reset(self, seed=None):
         self.tick = 0
-        self.rng = pufferlib.utils.RandomState(seed)
+        self.rng = np.random.RandomState(seed)
 
         ob = _sample_space('agent_1', self.tick, self.observation_space)
         return ob, {}
