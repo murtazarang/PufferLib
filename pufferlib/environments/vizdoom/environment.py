@@ -7,8 +7,6 @@ import gymnasium as gym
 import pufferlib
 import pufferlib.emulation
 import pufferlib.environments
-import pufferlib.utils
-import pufferlib.postprocess
 
 
 def env_creator(name='doom'):
@@ -30,7 +28,7 @@ def make(name, framestack=1, render_mode='rgb_array', buf=None):
     # Make does not work without this imported
     # TODO: Fix try_import
     from vizdoom import gymnasium_wrapper
-    with pufferlib.utils.Suppress():
+    with pufferlib.Suppress():
         env = gym.make(name, render_mode=render_mode)
 
     env = DoomWrapper(env) # Don't use standard postprocessor
@@ -51,14 +49,12 @@ class DoomWrapper(gym.Wrapper):
     render format. This is slow. So we do it ourselves. Not it is fast. Yay!'''
     def __init__(self, env):
         super().__init__(env.unwrapped)
-        if env.observation_space['screen'].shape[0] != 120:
-            raise ValueError('Wrong screen resolution. Doom does not provide '
-                'a way to change this. You must edit scenarios/<env_name>.cfg'
-                'This is inside your local ViZDoom installation. Likely in python system packages'
-                'Set screen resolution to RES_160X120 and screen format to GRAY8')
-
+        screen = env.observation_space['screen']
         self.observation_space = gym.spaces.Box(
-            low=0, high=255, shape=(60, 80, 1), dtype=np.uint8)
+            low=screen.low[::2, ::2],
+            high=screen.high[::2, ::2],
+            dtype=screen.dtype,
+        )
 
     def reset(self, seed=None, options=None):
         obs, info = self.env.reset(seed=seed, options=options)

@@ -8,11 +8,9 @@ import functools
 import pufferlib
 import pufferlib.emulation
 import pufferlib.environments
-import pufferlib.postprocess
-import pufferlib.utils
 
 
-class TransposeObs(gym.Wrapper):
+class TransposeObs(gymnasium.Wrapper):
     def observation(self, observation):
         return observation.transpose(2, 0, 1)
 
@@ -26,14 +24,14 @@ def make(name, buf=None):
 
     pufferlib.environments.try_import('crafter')
     env = gym.make(name)
-    env.reset = pufferlib.utils.silence_warnings(env.reset)
+    env.reset = pufferlib.silence_warnings(env.reset)
     env = shimmy.GymV21CompatibilityV0(env=env)
     env = RenderWrapper(env)
     env = TransposeObs(env)
-    env = pufferlib.postprocess.EpisodeStats(env)
+    env = pufferlib.EpisodeStats(env)
     return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)
 
-class RenderWrapper(gym.Wrapper):
+class RenderWrapper(gymnasium.Wrapper):
     def __init__(self, env):
         super().__init__(env)
         self.env = env
@@ -43,4 +41,4 @@ class RenderWrapper(gym.Wrapper):
         return 'rgb_array'
 
     def render(self, *args, **kwargs):
-        return self.env.unwrapped.env.unwrapped.render((256,256))
+        return self.env.gym_env.unwrapped.render((256,256))

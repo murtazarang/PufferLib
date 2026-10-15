@@ -220,7 +220,8 @@ procgen = [
 slimevolley = [
     'gym==0.23',
     'gymnasium==0.29.1',
-    'slimevolley==0.1.0',
+    'slimevolleygym==0.1.0',
+    'opencv-python',
 ]
 
 vizdoom = [
