@@ -1,4 +1,5 @@
 import functools
+from pathlib import Path
 import numpy as np
 import gymnasium
 
@@ -17,7 +18,10 @@ def make(name, config='pufferlib/environments/metta/metta.yaml', render_mode='au
     '''Metta creation function'''
     
     OmegaConf.register_new_resolver("div", oc_divide, replace=True)
-    cfg = OmegaConf.load(config)
+    config_path = Path(config)
+    if not config_path.is_absolute() and not config_path.exists():
+        config_path = Path(__file__).resolve().parents[3] / config_path
+    cfg = OmegaConf.load(config_path)
     
     # Update rewards under the new structure: agent.rewards.inventory
     inventory_rewards = cfg['game']['agent']['rewards']['inventory']
