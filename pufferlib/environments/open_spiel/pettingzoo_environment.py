@@ -2,7 +2,6 @@ from pdb import set_trace as T
 import numpy as np
 
 import pufferlib
-from pufferlib import namespace
 
 from pufferlib.environments.open_spiel.utils import (
     solve_chance_nodes,

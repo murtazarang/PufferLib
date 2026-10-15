@@ -3,7 +3,6 @@ import numpy as np
 
 import gymnasium
 
-from pufferlib import namespace
 
 
 def init(self, 
@@ -12,17 +11,16 @@ def init(self,
     min_simulations,
     max_simulations
     ):
-    #state.num_agents = state.env.num_players()
-    return namespace(self,
-        env=env,
-        type=env.get_type(),
-        n_rollouts=n_rollouts,
-        min_simulations=min_simulations,
-        max_simulations=max_simulations,
-        state=None,
-        agents=[],
-        has_reset=False,
-    )
+    self.env = env
+    self.type = env.get_type()
+    self.n_rollouts = n_rollouts
+    self.min_simulations = min_simulations
+    self.max_simulations = max_simulations
+    self.state = None
+    self.agents = []
+    self.has_reset = False
+    self.render_mode = None
+
 
 def observation_space(state):
     return gymnasium.spaces.Dict({

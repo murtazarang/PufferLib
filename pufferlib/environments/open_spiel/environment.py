@@ -3,7 +3,6 @@ import numpy as np
 import functools
 
 import pufferlib
-from pufferlib import namespace
 import pufferlib.emulation
 import pufferlib.environments
 
@@ -50,7 +49,6 @@ def make(
 
     return wrapper_cls(
         env=env,
-        postprocessor_cls=pufferlib.emulation.BasicPostprocessor,
         buf=buf,
     )
 
