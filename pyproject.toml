@@ -43,8 +43,8 @@ atari = [
 ]
 
 box2d = [
-    'gymnasium[box2d]==0.29.1',
-    'swig==4.1.1',
+    'gymnasium[box2d]>=1.4,<2',
+    'swig>=4,<5',
 ]
 
 bsuite = [
@@ -55,13 +55,13 @@ bsuite = [
 
 butterfly = [
     'gym==0.23',
-    'gymnasium==0.29.1',
-    'pettingzoo[butterfly]==1.24.1',
+    'gymnasium>=1.4,<2',
+    'pettingzoo[butterfly]>=1.27,<2',
 ]
 
 classic_control = [
     'gym==0.23',
-    'gymnasium==0.29.1',
+    'gymnasium>=1.4,<2',
 ]
 
 crafter = [
@@ -160,7 +160,7 @@ minihack =  [
 ]
 
 mujoco = [
-    'gymnasium[mujoco]==1.0.0',
+    'gymnasium[mujoco]>=1.4,<2',
     'moviepy',
 ]
 

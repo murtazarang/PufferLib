@@ -49,7 +49,7 @@ def cleanrl_env_creator(env_name, run_name, capture_video, gamma, idx):
 
 
 # Keep it simple for pufferl demo, for now
-def env_creator(env_name="HalfCheetah-v4", gamma=0.99):
+def env_creator(env_name="HalfCheetah-v5", gamma=0.99):
     default_kwargs = {
         "env_name": env_name,
         "capture_video": False,

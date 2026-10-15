@@ -5,17 +5,16 @@ import numpy as np
 
 import pufferlib
 import pufferlib.emulation
-import pufferlib.postprocess
 
 ALIASES = {
-    'cartpole': 'CartPole-v0',
+    'cartpole': 'CartPole-v1',
     'mountaincar': 'MountainCar-v0',
 }
 
 def env_creator(name='cartpole'):
     return functools.partial(make, name)
 
-def make(name, render_mode='rgb_array', buf=None):
+def make(name, render_mode='rgb_array', buf=None, seed=0):
     '''Create an environment by name'''
 
     if name in ALIASES:
@@ -26,11 +25,12 @@ def make(name, render_mode='rgb_array', buf=None):
         env = MountainCarWrapper(env)
 
     #env = gymnasium.wrappers.NormalizeObservation(env)
-    env = gymnasium.wrappers.TransformObservation(env, lambda obs: np.clip(obs, -1, 1))
+    env = gymnasium.wrappers.TransformObservation(
+        env, lambda obs: np.clip(obs, -1, 1), observation_space=env.observation_space)
     #env = gymnasium.wrappers.NormalizeReward(env, gamma=gamma)
     env = gymnasium.wrappers.TransformReward(env, lambda reward: np.clip(reward, -1, 1))
-    env = pufferlib.postprocess.EpisodeStats(env)
-    return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf)
+    env = pufferlib.EpisodeStats(env)
+    return pufferlib.emulation.GymnasiumPufferEnv(env=env, buf=buf, seed=seed)
 
 class MountainCarWrapper(gymnasium.Wrapper):
     def step(self, action):
