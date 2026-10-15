@@ -139,6 +139,7 @@ microrts = [
     'gymnasium==0.29.1',
     'ffmpeg==1.4',
     'gym_microrts==0.3.2',
+    'numpy<1.24',
 ]
 
 minerl = [
