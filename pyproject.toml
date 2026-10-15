@@ -79,6 +79,8 @@ dm_control = [
     'gym==0.23',
     'gymnasium==0.29.1',
     'dm_control==1.0.11',
+    'mujoco==2.3.3',
+    'setuptools<82',
 ]
 
 dm_lab = [
@@ -157,6 +159,7 @@ minihack =  [
     'gym==0.23',
     'gymnasium==0.29.1',
     'minihack==0.1.5',
+    'setuptools<82',
 ]
 
 mujoco = [
@@ -166,8 +169,8 @@ mujoco = [
 
 nethack = [
     'gym==0.23',
-    'gymnasium==0.29.1',
-    'nle==0.9.1',
+    'gymnasium==1.2.0',
+    'nle==1.3.0',
 ]
 
 nmmo = [
