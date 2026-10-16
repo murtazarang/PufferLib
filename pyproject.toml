@@ -211,9 +211,15 @@ procgen = [
     # Note: You need glfw==2.7 after installing for some torch versions
 ]
 
-#'smac': [
-#    'git+https://github.com/oxwhirl/smac.git',
-#],
+# StarCraft II assets require a separate licensed runtime installation.
+smac = [
+    'gymnasium==0.29.1',
+    'pettingzoo==1.24.1',
+    'numpy==1.23.5',
+    'pysc2==4.0.0',
+    's2clientprotocol==5.0.17.98310.0',
+    'smac @ git+https://github.com/oxwhirl/smac.git@d6aab33f76abc3849c50463a8592a84f59a5ef84',
+]
 #'stable-retro': [
 #    'git+https://github.com/Farama-Foundation/stable-retro.git',
 #]
